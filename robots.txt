@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://deal-math.pages.dev/sitemap.xml
+Sitemap: https://kimaleksandr.github.io/deal-math/sitemap.xml
