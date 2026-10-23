@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Discount Calculator</title>
+    <meta name="description" content="Free discount calculator" />
+    <link rel="canonical" href="https://deal-math.pages.dev/" />
+    <link rel="alternate" hreflang="en" href="https://deal-math.pages.dev/?lang=en" />
+    <link rel="alternate" hreflang="ru" href="https://deal-math.pages.dev/?lang=ru" />
+    <link rel="alternate" hreflang="ky" href="https://deal-math.pages.dev/?lang=ky" />
+    <link rel="alternate" hreflang="kk" href="https://deal-math.pages.dev/?lang=kk" />
+    <link rel="alternate" hreflang="uz" href="https://deal-math.pages.dev/?lang=uz" />
+    <link rel="alternate" hreflang="x-default" href="https://deal-math.pages.dev/?lang=en" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Deal Math — Discount Calculator" />
+    <meta property="og:description" content="Sale price, stacked discounts, VAT, compare deals." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=JetBrains+Mono:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Deal Math",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <p class="logo" data-i18n="brand">Deal Math</p>
+        <h1 data-i18n="h1">Discount calculator</h1>
+        <p class="lead" data-i18n="lead"></p>
+        <div class="header-controls">
+          <div class="field field-inline">
+            <label for="lang" data-i18n="langLabel">Language</label>
+            <select id="lang" name="lang"></select>
+          </div>
+          <div class="field field-inline">
+            <label for="currency" data-i18n="currencyLabel">Currency</label>
+            <select id="currency" name="currency">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="RUB">RUB</option>
+              <option value="KGS">KGS</option>
+              <option value="KZT">KZT</option>
+              <option value="UZS">UZS</option>
+            </select>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="card">
+          <div class="tabs" role="tablist">
+            <button type="button" class="tab" role="tab" aria-selected="true" data-panel="panel-simple" data-i18n="tabSimple"></button>
+            <button type="button" class="tab" role="tab" aria-selected="false" data-panel="panel-stack" data-i18n="tabStack"></button>
+            <button type="button" class="tab" role="tab" aria-selected="false" data-panel="panel-reverse" data-i18n="tabReverse"></button>
+            <button type="button" class="tab" role="tab" aria-selected="false" data-panel="panel-restore" data-i18n="tabRestore"></button>
+            <button type="button" class="tab" role="tab" aria-selected="false" data-panel="panel-vat" data-i18n="tabVat"></button>
+            <button type="button" class="tab" role="tab" aria-selected="false" data-panel="panel-qty" data-i18n="tabQty"></button>
+            <button type="button" class="tab" role="tab" aria-selected="false" data-panel="panel-compare" data-i18n="tabCompare"></button>
+          </div>
+
+          <div class="toolbar">
+            <button type="button" class="btn secondary" id="btn-copy" data-i18n="copyResult"></button>
+            <button type="button" class="btn secondary" id="btn-share" data-i18n="shareLink"></button>
+          </div>
+
+          <div id="panel-simple" class="panel" role="tabpanel">
+            <div class="row">
+              <div class="field">
+                <label for="price" data-i18n="labelOriginal"></label>
+                <input id="price" type="number" inputmode="decimal" min="0" step="0.01" />
+              </div>
+              <div class="field">
+                <label for="discount" data-i18n="labelDiscount"></label>
+                <input id="discount" type="number" inputmode="decimal" min="0" max="100" step="0.1" />
+              </div>
+            </div>
+            <div class="result" id="result-simple">
+              <p class="result-main">—</p>
+              <p class="result-sub"></p>
+            </div>
+            <p class="hint" data-i18n="hintSimple"></p>
+          </div>
+
+          <div id="panel-stack" class="panel" role="tabpanel" hidden>
+            <div class="field">
+              <label for="stack-price" data-i18n="labelOriginal"></label>
+              <input id="stack-price" type="number" inputmode="decimal" min="0" step="0.01" />
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="stack-d1" data-i18n="labelFirst"></label>
+                <input id="stack-d1" type="number" inputmode="decimal" min="0" max="100" step="0.1" />
+              </div>
+              <div class="field">
+                <label for="stack-d2" data-i18n="labelSecond"></label>
+                <input id="stack-d2" type="number" inputmode="decimal" min="0" max="100" step="0.1" />
+              </div>
+            </div>
+            <div class="result" id="result-stack">
+              <p class="result-main">—</p>
+              <p class="result-sub"></p>
+            </div>
+            <p class="hint" data-i18n="hintStack"></p>
+          </div>
+
+          <div id="panel-reverse" class="panel" role="tabpanel" hidden>
+            <div class="row">
+              <div class="field">
+                <label for="rev-original" data-i18n="labelWas"></label>
+                <input id="rev-original" type="number" inputmode="decimal" min="0" step="0.01" />
+              </div>
+              <div class="field">
+                <label for="rev-sale" data-i18n="labelNow"></label>
+                <input id="rev-sale" type="number" inputmode="decimal" min="0" step="0.01" />
+              </div>
+            </div>
+            <div class="result" id="result-reverse">
+              <p class="result-main">—</p>
+              <p class="result-sub"></p>
+            </div>
+            <p class="hint" data-i18n="hintReverse"></p>
+          </div>
+
+          <div id="panel-restore" class="panel" role="tabpanel" hidden>
+            <div class="row">
+              <div class="field">
+                <label for="restore-sale" data-i18n="labelNow"></label>
+                <input id="restore-sale" type="number" inputmode="decimal" min="0" step="0.01" />
+              </div>
+              <div class="field">
+                <label for="restore-disc" data-i18n="labelDiscount"></label>
+                <input id="restore-disc" type="number" inputmode="decimal" min="0" max="99.9" step="0.1" />
+              </div>
+            </div>
+            <div class="result" id="result-restore">
+              <p class="result-main">—</p>
+              <p class="result-sub"></p>
+            </div>
+            <p class="hint" data-i18n="hintRestore"></p>
+          </div>
+
+          <div id="panel-vat" class="panel" role="tabpanel" hidden>
+            <div class="row">
+              <div class="field">
+                <label for="vat-price" data-i18n="labelOriginal"></label>
+                <input id="vat-price" type="number" inputmode="decimal" min="0" step="0.01" />
+              </div>
+              <div class="field">
+                <label for="vat-disc" data-i18n="labelDiscount"></label>
+                <input id="vat-disc" type="number" inputmode="decimal" min="0" max="100" step="0.1" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="vat-rate" data-i18n="labelVat"></label>
+              <input id="vat-rate" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="12" />
+            </div>
+            <div class="result" id="result-vat">
+              <p class="result-main">—</p>
+              <p class="result-sub"></p>
+            </div>
+            <p class="hint" data-i18n="hintVat"></p>
+          </div>
+
+          <div id="panel-qty" class="panel" role="tabpanel" hidden>
+            <div class="row">
+              <div class="field">
+                <label for="qty-unit" data-i18n="labelUnitPrice"></label>
+                <input id="qty-unit" type="number" inputmode="decimal" min="0" step="0.01" />
+              </div>
+              <div class="field">
+                <label for="qty-count" data-i18n="labelQty"></label>
+                <input id="qty-count" type="number" inputmode="decimal" min="1" step="1" value="2" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="qty-disc" data-i18n="labelDiscount"></label>
+              <input id="qty-disc" type="number" inputmode="decimal" min="0" max="100" step="0.1" />
+            </div>
+            <div class="result" id="result-qty">
+              <p class="result-main">—</p>
+              <p class="result-sub"></p>
+            </div>
+            <p class="hint" data-i18n="hintQty"></p>
+          </div>
+
+          <div id="panel-compare" class="panel" role="tabpanel" hidden>
+            <div class="compare-grid">
+              <div>
+                <div class="field">
+                  <label for="cmp-price-a" data-i18n="labelOfferA"></label>
+                  <input id="cmp-price-a" type="number" inputmode="decimal" min="0" step="0.01" />
+                </div>
+                <div class="field">
+                  <label for="cmp-disc-a" data-i18n="labelOfferADisc"></label>
+                  <input id="cmp-disc-a" type="number" inputmode="decimal" min="0" max="100" step="0.1" />
+                </div>
+              </div>
+              <div>
+                <div class="field">
+                  <label for="cmp-price-b" data-i18n="labelOfferB"></label>
+                  <input id="cmp-price-b" type="number" inputmode="decimal" min="0" step="0.01" />
+                </div>
+                <div class="field">
+                  <label for="cmp-disc-b" data-i18n="labelOfferBDisc"></label>
+                  <input id="cmp-disc-b" type="number" inputmode="decimal" min="0" max="100" step="0.1" />
+                </div>
+              </div>
+            </div>
+            <div class="result" id="result-compare">
+              <p class="result-main">—</p>
+              <p class="result-sub"></p>
+            </div>
+            <p class="hint" data-i18n="hintCompare"></p>
+          </div>
+        </section>
+
+        <div class="ad-slot" id="ad-top" data-i18n="adPlaceholder"></div>
+
+        <section class="affiliate card">
+          <h2 data-i18n="affiliateTitle"></h2>
+          <p class="hint affiliate-hint" data-i18n="affiliateHint"></p>
+          <ul class="affiliate-list" id="affiliate-list"></ul>
+          <p class="disclosure" data-i18n="disclosure"></p>
+        </section>
+
+        <section class="faq seo-block">
+          <h2 data-i18n="faqTitle"></h2>
+          <div id="faq-root"></div>
+        </section>
+      </main>
+
+      <footer>
+        <p data-i18n="footerText"></p>
+      </footer>
+    </div>
+
+    <script>
+      window.SITE_CONFIG = window.SITE_CONFIG || { affiliates: [] };
+    </script>
+    <script src="config.js" defer></script>
+    <script type="module" src="assets/app.js"></script>
+  </body>
+</html>
