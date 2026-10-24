@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://kimaleksandr.github.io/deal-math/sitemap.xml
+Sitemap: https://kimaleksandr.github.io/deal-math/sitemap.txt
